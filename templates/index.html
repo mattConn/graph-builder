@@ -7,19 +7,28 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Webapp</title>
+        <title>Graph Builder</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/static/style.css">
     </head>
-    <body>
-        <h1>Webapp</h1>
-        <p>{{content}}</p>
-        <form action="/addnode" method="GET">
-            <input type="text" id="node_label" name="label" placeholder="Label">
-            <button type="submit" id="submit">Add Node</button>
+    <div id="wrapper">
+        <body>
+            <h1>Graph Builder</h1>
+            <p>{{content}}</p>
+            <form action="/addnode" method="GET">
+                <input type="text" id="node_label" name="label" placeholder="Label">
+                <button type="submit" id="submit">Add Node</button>
+            </form>
+        </br>
+        <form action="/addedge" method="GET">
+            <input type="text" id="node_label1" name="label1" placeholder="From">
+            <input type="text" id="node_label2" name="label2" placeholder="To">
+            <button type="submit" id="submit">Add Edge</button>
         </form>
-        <img src="static/graph.png">
+        <img src="{{filepath}}">
 
     </body>
+</div>
+<!--end wrapper-->
 </html>
