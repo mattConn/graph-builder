@@ -1,3 +1,2 @@
 static/*.png
-!static/graph0.png
 __pycache__
