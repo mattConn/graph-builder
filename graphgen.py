@@ -8,7 +8,7 @@ with open('./data.json') as f:
 
 
 # make graph from json
-graph = nx.readwrite.json_graph.node_link_graph(data)
+graph = nx.DiGraph(nx.readwrite.json_graph.node_link_graph(data))
 
 def draw(filename):
     nx.draw_networkx(graph,font_color='black')
