@@ -6,6 +6,10 @@ from graphgen import graph
 from flask import Flask, request, render_template, redirect, url_for
 app = Flask(__name__)
 
+
+
+
+
 def updateAndDraw():
     graph.filehash = random.randint(1000,4000)
     graph.draw(f'static/img/graph{graph.filehash}.png')
