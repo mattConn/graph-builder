@@ -11,7 +11,7 @@ with open('./data.json') as f:
 graph = nx.DiGraph(nx.readwrite.json_graph.node_link_graph(data))
 
 def draw(filename):
-    nx.draw_networkx(graph,font_color='black')
+    nx.draw_networkx(graph,font_color='black', pos=nx.circular_layout(graph))
     plt.savefig(filename) # save graph image
     plt.close()
 
