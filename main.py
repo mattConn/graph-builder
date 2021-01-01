@@ -2,13 +2,9 @@ import json
 import random
 import os
 import subprocess
-from graphgen import graph
+from graphgen import graph, nx
 from flask import Flask, request, render_template, redirect, url_for
 app = Flask(__name__)
-
-
-
-
 
 def updateAndDraw():
     graph.filehash = random.randint(1000,4000)
@@ -16,7 +12,7 @@ def updateAndDraw():
 
 @app.route("/")
 def index():
-    return render_template('index.html',filepath = f'static/img/graph{graph.filehash}.png') 
+    return render_template('index.html',filepath = f'static/img/graph{graph.filehash}.png', data = json.dumps(nx.node_link_data(graph)) ) 
 
 @app.route("/addnode")
 def addnode():

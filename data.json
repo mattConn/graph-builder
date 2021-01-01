@@ -1,1 +1,0 @@
-{"directed": false, "multigraph": false, "graph": {}, "nodes": [{"id": "joe moe"}, {"id": "Sarah Lee"}, {"id": "George Lucas"}, {"id": "Jeff Winger"}, {"id": "Rebecca George"}, {"id": "Steve Rogers"}, {"id": "Lee Mathers"}, {"id": "Wade Wilson"}, {"id": "Peter Parker"}, {"id": "joe blow"}], "links": [{"source": "George Lucas", "target": "joe blow"}]}

@@ -14,7 +14,7 @@
     </head>
     <div id="wrapper">
         <body>
-            <h1>Friend Network Modeler</h1>
+            <h1>Graph Builder</h1>
             <p>{{content}}</p>
             <form action="/addnode" method="GET">
                 <input type="text" id="node_label" name="label" placeholder="Label">
@@ -27,6 +27,10 @@
             <button type="submit" id="submit">Add Edge</button>
         </form>
         <img src="{{filepath}}">
+	<div>
+	<h2>JSON Graph Data</h3>
+		<p>{{data}}</p>
+	</div>
 
     </body>
 </div>
