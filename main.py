@@ -27,10 +27,17 @@ def removenode():
         updateAndDraw()
     return redirect(url_for('index'))
 
+# add and remove edge 
 @app.route("/addedge")
 def addedge():
     graph.add_edge(request.args.get('label1'),request.args.get('label2'))
     updateAndDraw()
+    return redirect(url_for('index'))
+@app.route("/removeedge")
+def removeedge():
+    if graph.has_edge(request.args.get('label1'),request.args.get('label2')):
+        graph.remove_edge(request.args.get('label1'),request.args.get('label2'))
+        updateAndDraw()
     return redirect(url_for('index'))
 
 

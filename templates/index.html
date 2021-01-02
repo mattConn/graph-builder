@@ -36,6 +36,13 @@
             <input type="text" id="node_label2" name="label2" placeholder="To">
             <button type="submit" id="submit">Add Edge</button>
         </form>
+        </br>
+        <!-- remove edge -->
+        <form action="/removeedge" method="GET">
+            <input type="text" id="node_label1" name="label1" placeholder="From">
+            <input type="text" id="node_label2" name="label2" placeholder="To">
+            <button type="submit" id="submit">Remove Edge</button>
+        </form>
         <img src="{{filepath}}">
         <div>
             <h2>JSON Graph Data</h3>
