@@ -40,6 +40,13 @@ def removeedge():
         updateAndDraw()
     return redirect(url_for('index'))
 
+# clear graph
+@app.route("/clear")
+def cleargraph():
+    graph.clear()
+    updateAndDraw()
+    return redirect(url_for('index'))
+
 
 if __name__ == '__main__':
   app.run()
