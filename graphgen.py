@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 graph = nx.Graph()
 
 def draw(filename):
-    nx.draw_networkx(graph,font_color='black', pos=nx.circular_layout(graph))
+    nx.draw_networkx(graph,font_color='white', pos=nx.circular_layout(graph))
     plt.savefig(filename) # save graph image
     plt.close()
 
