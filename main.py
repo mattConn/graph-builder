@@ -18,7 +18,10 @@ def updateAndDraw():
 @app.route("/")
 def index():
     updateAndDraw()
-    return render_template('index.html',filepath = filepath % session['filehash'], data = json.dumps(nx.node_link_data(graph)) ) 
+    return render_template('index.html',
+    filepath = filepath % session['filehash'],
+    matrix = str(nx.to_numpy_array(graph)).replace('.',',').replace('\n',','),
+    data = json.dumps(nx.node_link_data(graph)) ) 
 
 # add and remove node
 @app.route("/addnode")
