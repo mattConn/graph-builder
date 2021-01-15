@@ -10,8 +10,6 @@ def draw(filename):
     plt.savefig(filename) # save graph image
     plt.close()
 
+filepath = 'static/img/graph%s.png'
 
-
-graph.draw = draw
-graph.filehash = 0
-graph.draw('static/img/graph0.png') # draw initial graph
+draw('static/img/graph0.png') # draw initial graph
