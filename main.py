@@ -9,7 +9,9 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 def updateAndDraw():
-    # os.remove()
+    if 'filehash' in session and os.path.isfile(filepath % session['filehash']): # clean up
+        os.remove(filepath % session['filehash'])
+
     session['filehash'] = random.randint(1000,4000)
     draw(filepath % session['filehash'])
 
@@ -24,6 +26,7 @@ def addnode():
     graph.add_node(request.args.get('label'))
     updateAndDraw()
     return index()
+
 @app.route("/removenode")
 def removenode():
     if graph.has_node(request.args.get('label')):
