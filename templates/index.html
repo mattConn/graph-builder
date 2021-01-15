@@ -19,33 +19,33 @@
         <h1>Graph Builder</h1>
         <p>{{content}}</p>
         <!-- add edge -->
-        <form action="/addedge" method="GET">
+        <form action="addedge" method="GET">
             <input type="text" id="node_label1" name="label1" placeholder="From">
             <input type="text" id="node_label2" name="label2" placeholder="To">
             <button type="submit" id="submit">Add Edge</button>
         </form>
         </br>
         <!-- remove edge -->
-        <form action="/removeedge" method="GET">
+        <form action="removeedge" method="GET">
             <input type="text" id="node_label1" name="label1" placeholder="From">
             <input type="text" id="node_label2" name="label2" placeholder="To">
             <button type="submit" id="submit">Remove Edge</button>
         </form>
         </br>
         <!-- add node -->
-        <form action="/addnode" method="GET">
+        <form action="addnode" method="GET">
             <input type="text" id="node_label" name="label" placeholder="Label">
             <button type="submit" id="submit">Add Node</button>
         </form>
         </br>
         <!-- remove node -->
-        <form action="/removenode" method="GET">
+        <form action="removenode" method="GET">
             <input type="text" id="node_label" name="label" placeholder="Label">
             <button type="submit" id="submit">Remove Node</button>
         </form>
         </br>
         <!-- clear graph -->
-        <form action="/clear" method="GET">
+        <form action="clear" method="GET">
             <button type="submit" id="submit">Clear Graph</button>
         </form>
         <img src="{{filepath}}">
