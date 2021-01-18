@@ -35,6 +35,11 @@ def updateAndDraw():
 
     # draw(filepath % session['filehash'])
 
+def updateSessionGraph(update):
+    graph = getSessionGraph()
+    update(graph)
+    setSessionGraph(graph)
+
 @app.route("/")
 def index():
     graph = getSessionGraph()
@@ -48,53 +53,44 @@ def index():
 # add and remove node
 @app.route("/addnode")
 def addnode():
-    graph = getSessionGraph()
-    graph.add_node(request.args.get('label'))
-    setSessionGraph(graph)
+    updateSessionGraph(lambda graph: graph.add_node(request.args.get('label')))
 
     return index()
 
 @app.route("/removenode")
 def removenode():
-    graph = getSessionGraph()
 
-    if graph.has_node(request.args.get('label')):
-        graph.remove_node(request.args.get('label'))
+    def remove(graph):
+        if graph.has_node(request.args.get('label')):
+            graph.remove_node(request.args.get('label'))
 
-    draw(graph, filepath % session['filehash'])
-    setSessionGraph(graph)
+    updateSessionGraph(remove)
 
     return index()
 
 # add and remove edge 
 @app.route("/addedge")
 def addedge():
-    graph = getSessionGraph()
-    graph.add_edge(request.args.get('label1'),request.args.get('label2'))
-    draw(graph, filepath % session['filehash'])
-    setSessionGraph(graph)
+    updateSessionGraph(lambda graph: graph.add_edge(request.args.get('label1'),request.args.get('label2')))
 
     return index()
 
 @app.route("/removeedge")
 def removeedge():
-    graph = getSessionGraph()
 
-    if graph.has_edge(request.args.get('label1'),request.args.get('label2')):
-        graph.remove_edge(request.args.get('label1'),request.args.get('label2'))
+    def remove(graph):
+        if graph.has_edge(request.args.get('label1'),request.args.get('label2')):
+            graph.remove_edge(request.args.get('label1'),request.args.get('label2'))
 
-    draw(graph, filepath % session['filehash'])
-    setSessionGraph(graph)
+    updateSessionGraph(remove)
 
     return index()
 
 # clear graph
 @app.route("/clear")
 def cleargraph():
-    graph = getSessionGraph()
-    graph.clear()
-    draw(graph, filepath % session['filehash'])
-    setSessionGraph(graph)
+
+    updateSessionGraph(lambda graph: graph.clear())
 
     return index()
 
