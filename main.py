@@ -21,12 +21,14 @@ def updateSessionGraph(update = lambda _: None):
     update(graph)
     setSessionGraph(graph)
 
-@app.route("/")
-def index():
+@app.before_request
+def before_request():
     # store empty graph
     if 'graph' not in session:
         session['graph'] = nx.adjacency_data(nx.Graph())
 
+@app.route("/")
+def graphInterfaceView():
     # remove old graph image
     if 'filehash' in session and os.path.isfile(filepath % session['filehash']):
         os.remove(filepath % session['filehash'])
@@ -51,7 +53,7 @@ def index():
 def addnode():
     updateSessionGraph(lambda graph: graph.add_node(request.args.get('label')))
 
-    return index()
+    return graphInterfaceView()
 
 @app.route("/removenode")
 def removenode():
@@ -62,14 +64,14 @@ def removenode():
 
     updateSessionGraph(remove)
 
-    return index()
+    return graphInterfaceView()
 
 # add and remove edge 
 @app.route("/addedge")
 def addedge():
     updateSessionGraph(lambda graph: graph.add_edge(request.args.get('label1'),request.args.get('label2')))
 
-    return index()
+    return graphInterfaceView()
 
 @app.route("/removeedge")
 def removeedge():
@@ -80,7 +82,7 @@ def removeedge():
 
     updateSessionGraph(remove)
 
-    return index()
+    return graphInterfaceView()
 
 # clear graph
 @app.route("/clear")
@@ -88,7 +90,7 @@ def cleargraph():
 
     updateSessionGraph(lambda graph: graph.clear())
 
-    return index()
+    return graphInterfaceView()
 
 
 if __name__ == '__main__':

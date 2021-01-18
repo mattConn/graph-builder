@@ -3,3 +3,6 @@
     width: 80%;
     font-family: sans-serif;
 }
+input {
+    width: 30px;
+}
