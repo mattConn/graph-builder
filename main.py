@@ -1,26 +1,14 @@
 import json
 import random
 import os
-import subprocess
-from graphgen import draw, filepath, nx
+import networkx as nx
+import matplotlib.pyplot as plt
 from flask import Flask, request, render_template, redirect, url_for, session
 app = Flask(__name__)
 
 app.secret_key = os.urandom(24)
 
-@app.before_request
-def preflight():
-
-    # store empty graph
-    if 'graph' not in session:
-        session['graph'] = nx.adjacency_data(nx.Graph())
-
-    # remove old graph image
-    # if 'filehash' in session and os.path.isfile(filepath % session['filehash']):
-    #     os.remove(filepath % session['filehash'])
-
-    # generate new filehash
-    session['filehash'] = random.randint(1000,4000)
+filepath = 'static/img/graph%s.png'
 
 def getSessionGraph():
     return nx.adjacency_graph(session['graph'])
@@ -28,22 +16,30 @@ def getSessionGraph():
 def setSessionGraph(graph):
     session['graph'] = nx.adjacency_data(graph)
 
-def updateAndDraw():
-
-    if 'graph' not in session:
-        session['graph'] = json.dumps( nx.node_link_data(nx.Graph()) )  
-
-    # draw(filepath % session['filehash'])
-
-def updateSessionGraph(update):
+def updateSessionGraph(update = lambda _: None):
     graph = getSessionGraph()
     update(graph)
     setSessionGraph(graph)
 
 @app.route("/")
 def index():
+    # store empty graph
+    if 'graph' not in session:
+        session['graph'] = nx.adjacency_data(nx.Graph())
+
+    # remove old graph image
+    if 'filehash' in session and os.path.isfile(filepath % session['filehash']):
+        os.remove(filepath % session['filehash'])
+
+    # generate new filehash
+    session['filehash'] = random.randint(1000,4000)
+
     graph = getSessionGraph()
-    draw(graph, filepath % session['filehash'])
+
+    nx.draw_networkx(graph,font_color='white', pos=nx.circular_layout(graph))
+    plt.savefig(filepath % session['filehash']) # save graph image
+    plt.close()
+
 
     return render_template('index.html',
     filepath = filepath % session['filehash'],
