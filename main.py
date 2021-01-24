@@ -51,7 +51,7 @@ def graphInterfaceView():
 # add and remove node
 @app.route("/addnode")
 def addnode():
-    updateSessionGraph(lambda graph: graph.add_node(request.args.get('label')))
+    updateSessionGraph(lambda graph: graph.add_node(len(graph.nodes)))
 
     return graphInterfaceView()
 
