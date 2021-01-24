@@ -61,7 +61,7 @@ def addnode():
 
     updateSessionGraph(add)
 
-    return graphInterfaceView()
+    return redirect(url_for('graphInterfaceView'))
 
 @app.route("/removenode")
 def removenode():
@@ -72,14 +72,14 @@ def removenode():
 
     updateSessionGraph(remove)
 
-    return graphInterfaceView()
+    return redirect(url_for('graphInterfaceView'))
 
 # add and remove edge 
 @app.route("/addedge")
 def addedge():
     updateSessionGraph(lambda graph: graph.add_edge(request.args.get('label1'),request.args.get('label2')))
 
-    return graphInterfaceView()
+    return redirect(url_for('graphInterfaceView'))
 
 @app.route("/toggleedge")
 def toggleedge():
@@ -94,7 +94,7 @@ def toggleedge():
 
     updateSessionGraph(toggle)
 
-    return graphInterfaceView()
+    return redirect(url_for('graphInterfaceView'))
 
 # complement graph
 @app.route("/complement")
@@ -103,7 +103,7 @@ def complementgraph():
     graph = getSessionGraph()
     setSessionGraph(nx.complement(graph))
 
-    return graphInterfaceView()
+    return redirect(url_for('graphInterfaceView'))
 
 # clear graph
 @app.route("/clear")
@@ -111,7 +111,7 @@ def cleargraph():
 
     updateSessionGraph(lambda graph: graph.clear())
 
-    return graphInterfaceView()
+    return redirect(url_for('graphInterfaceView'))
 
 
 if __name__ == '__main__':
