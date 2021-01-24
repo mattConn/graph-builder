@@ -46,12 +46,19 @@ def graphInterfaceView():
     return render_template('index.html',
     filepath = filepath % session['filehash'],
     matrix = str(nx.to_numpy_array(graph)).replace('.',',').replace('\n',','),
+    nodes = graph.nodes,
     data = json.dumps(nx.node_link_data(graph)) ) 
 
 # add and remove node
 @app.route("/addnode")
 def addnode():
-    updateSessionGraph(lambda graph: graph.add_node(len(graph.nodes)))
+    def add(graph):
+        for i in range(len(graph.nodes)+1):
+            if i not in graph.nodes:
+                graph.add_node(i)
+                break
+
+    updateSessionGraph(add)
 
     return graphInterfaceView()
 
@@ -59,8 +66,10 @@ def addnode():
 def removenode():
 
     def remove(graph):
-        if graph.has_node(request.args.get('label')):
-            graph.remove_node(request.args.get('label'))
+        if graph.has_node(int(request.args.get('label'))):
+            graph.remove_node(int(request.args.get('label')))
+
+        print(graph.nodes)
 
     updateSessionGraph(remove)
 
