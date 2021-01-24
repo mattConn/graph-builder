@@ -45,7 +45,7 @@
         </br>
         <!-- clear edges -->
         <form action="clearedges" method="GET">
-            <button type="submit" id="submit" {% if nodes|length == 0 %}disabled{% endif %}>Clear Edges</button>
+            <button type="submit" id="submit" {% if graph.edges|length == 0 %}disabled{% endif %}>Clear Edges</button>
         </form>
         </br>
         <!-- clear graph -->
