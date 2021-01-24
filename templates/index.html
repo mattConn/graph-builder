@@ -26,24 +26,28 @@
         </br>
         <!-- remove node -->
         <form id="removenode" action="removenode" method="GET">
+            {% if nodes|length > 0 %}
             <select id="label" name="label" form="removenode">
                 {% for i in nodes %}
                 <option value="{{i}}">{{i}}</option>
                 {%endfor%}
             </select>
+            {% endif %}
 
-            <button type="submit" id="submit">Remove Node</button>
+            <button type="submit" id="submit" {% if nodes|length == 0 %}disabled{% endif %}>Remove Node</button>
 
         </form>
         </br>
         <!-- clear graph -->
         <form action="clear" method="GET">
-            <button type="submit" id="submit">Clear Graph</button>
+            <button type="submit" id="submit" {% if nodes|length == 0 %}disabled{% endif %}>Clear Graph</button>
         </form>
 
 
         <h2>Toggle Edges</h2>
         <!-- adjaceny matrix interface -->
+
+        {% if nodes|length > 1 %}
         <form action="toggleedge" method="GET">
             <table>
                 <tr>
@@ -71,6 +75,7 @@
 
             </table>
         </form>
+        {% endif %}
 
         <div>
             <h2>Adjaceny Matrix Array</h2>

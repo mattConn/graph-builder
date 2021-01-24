@@ -69,8 +69,6 @@ def removenode():
         if graph.has_node(int(request.args.get('label'))):
             graph.remove_node(int(request.args.get('label')))
 
-        print(graph.nodes)
-
     updateSessionGraph(remove)
 
     return graphInterfaceView()
