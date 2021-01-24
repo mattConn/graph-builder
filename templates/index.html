@@ -45,6 +45,7 @@
 
 
         <h2>Toggle Edges</h2>
+        {% if nodes|length <= 1 %}<p>[Need more nodes]</p>{% endif %}
         <!-- adjaceny matrix interface -->
 
         {% if nodes|length > 1 %}
