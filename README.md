@@ -2,6 +2,8 @@
 
 This is a Flask webapp that interfaces with a NetworkX graph object.
 
+![screenshot](screenshot.png)
+
 - Add/remove edges via adjacency matrix interface
 - Complement the graph
 - Add/remove nodes
