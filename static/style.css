@@ -14,3 +14,24 @@ tr:hover {
 .disabled {
     background-color: gainsboro;
 }
+#adjmat .disabled button{
+    cursor: not-allowed;
+}
+
+#adjmat button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#adjmat button::selection {
+    background-color: none;
+}
+
+#adjmat td.active {
+    background-color:paleturquoise;
+}
+
+img {
+    float: right;
+}

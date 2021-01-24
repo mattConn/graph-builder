@@ -47,6 +47,7 @@ def graphInterfaceView():
     filepath = filepath % session['filehash'],
     matrix = str(nx.to_numpy_array(graph)).replace('.',',').replace('\n',','),
     nodes = graph.nodes,
+    graph = graph,
     data = json.dumps(nx.node_link_data(graph)) ) 
 
 # add and remove node
