@@ -46,43 +46,72 @@ def graphInterfaceView():
     return render_template('index.html',
     filepath = filepath % session['filehash'],
     matrix = str(nx.to_numpy_array(graph)).replace('.',',').replace('\n',','),
+    nodes = graph.nodes,
+    graph = graph,
     data = json.dumps(nx.node_link_data(graph)) ) 
 
 # add and remove node
 @app.route("/addnode")
 def addnode():
-    updateSessionGraph(lambda graph: graph.add_node(request.args.get('label')))
+    def add(graph):
+        for i in range(len(graph.nodes)+1):
+            if i not in graph.nodes:
+                graph.add_node(i)
+                break
 
-    return graphInterfaceView()
+    updateSessionGraph(add)
+
+    return redirect(url_for('graphInterfaceView'))
 
 @app.route("/removenode")
 def removenode():
 
     def remove(graph):
-        if graph.has_node(request.args.get('label')):
-            graph.remove_node(request.args.get('label'))
+        if graph.has_node(int(request.args.get('label'))):
+            graph.remove_node(int(request.args.get('label')))
 
     updateSessionGraph(remove)
 
-    return graphInterfaceView()
+    return redirect(url_for('graphInterfaceView'))
 
 # add and remove edge 
 @app.route("/addedge")
 def addedge():
     updateSessionGraph(lambda graph: graph.add_edge(request.args.get('label1'),request.args.get('label2')))
 
-    return graphInterfaceView()
+    return redirect(url_for('graphInterfaceView'))
 
-@app.route("/removeedge")
-def removeedge():
+@app.route("/toggleedge")
+def toggleedge():
 
-    def remove(graph):
-        if graph.has_edge(request.args.get('label1'),request.args.get('label2')):
-            graph.remove_edge(request.args.get('label1'),request.args.get('label2'))
+    edge = [int(n) for n in request.args.get('label').split('_')]
 
-    updateSessionGraph(remove)
+    def toggle(graph):
+        if graph.has_edge(edge[0],edge[1]):
+            graph.remove_edge(edge[0],edge[1])
+        else:
+            graph.add_edge(edge[0],edge[1])
 
-    return graphInterfaceView()
+    updateSessionGraph(toggle)
+
+    return redirect(url_for('graphInterfaceView'))
+
+# complement graph
+@app.route("/complement")
+def complementgraph():
+
+    graph = getSessionGraph()
+    setSessionGraph(nx.complement(graph))
+
+    return redirect(url_for('graphInterfaceView'))
+
+# clear edges 
+@app.route("/clearedges")
+def clearedges():
+
+    updateSessionGraph(lambda graph: graph.remove_edges_from(graph.edges()))
+
+    return redirect(url_for('graphInterfaceView'))
 
 # clear graph
 @app.route("/clear")
@@ -90,7 +119,7 @@ def cleargraph():
 
     updateSessionGraph(lambda graph: graph.clear())
 
-    return graphInterfaceView()
+    return redirect(url_for('graphInterfaceView'))
 
 
 if __name__ == '__main__':
