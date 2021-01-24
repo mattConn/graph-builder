@@ -35,3 +35,14 @@ tr:hover {
 img {
     float: right;
 }
+
+table {
+    border-collapse: collapse;
+}
+.row {
+    border-right: solid 1px;
+    font-weight: 700;
+}
+.col-header {
+    border-bottom: solid 1px;
+}

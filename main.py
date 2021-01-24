@@ -96,6 +96,15 @@ def toggleedge():
 
     return graphInterfaceView()
 
+# complement graph
+@app.route("/complement")
+def complementgraph():
+
+    graph = getSessionGraph()
+    setSessionGraph(nx.complement(graph))
+
+    return graphInterfaceView()
+
 # clear graph
 @app.route("/clear")
 def cleargraph():
