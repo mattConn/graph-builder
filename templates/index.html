@@ -17,14 +17,8 @@
 
     <body>
         <h1>Graph Builder</h1>
-        <p>{{content}}</p>
-        <!-- add edge -->
-        <form action="addedge" method="GET">
-            <input type="text" id="node_label1" name="label1">
-            <input type="text" id="node_label2" name="label2">
-            <button type="submit" id="submit">Add Edge</button>
-        </form>
-        </br>
+        <img src="{{filepath}}">
+
         <!-- add node -->
         <form action="addnode" method="GET">
             <button type="submit" id="submit">Add Node</button>
@@ -47,8 +41,8 @@
             <button type="submit" id="submit">Clear Graph</button>
         </form>
 
-        <img src="{{filepath}}">
 
+        <h2>Toggle Edges</h2>
         <!-- adjaceny matrix interface -->
         <form action="toggleedge" method="GET">
             <table>
@@ -63,7 +57,14 @@
                 <tr>
                     <td>{{i}}</td>
                     {% for j in nodes %}
-                    <td><input type="checkbox" id="edge_{{i}}_{{j}}" name="label" value="{{i}}_{{j}}" onChange="this.form.submit()"/></td>
+                    <td {% if i == j %} class="disabled" {% endif %}>
+                        <input type="checkbox"
+                        id="edge_{{i}}_{{j}}"
+                        name="label"
+                        value="{{i}}_{{j}}"
+                        {% if i == j %} disabled {% endif %}
+                        onChange="this.form.submit()"/>
+                    </td>
                     {%endfor%}
                 </tr>
                 {%endfor%}
@@ -72,10 +73,10 @@
         </form>
 
         <div>
-            <h2>Adjaceny Matrix Array</h3>
+            <h2>Adjaceny Matrix Array</h2>
                 <p>{{matrix}}</p>
 
-                <h2>JSON Node Link Data</h3>
+                <h2>JSON Node Link Data</h2>
                     <p>{{data}}</p>
         </div>
 

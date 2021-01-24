@@ -6,3 +6,11 @@
 input {
     width: 30px;
 }
+
+tr:hover {
+    background-color: lightskyblue;
+}
+
+.disabled {
+    background-color: gainsboro;
+}
