@@ -82,14 +82,18 @@ def addedge():
 
     return graphInterfaceView()
 
-@app.route("/removeedge")
-def removeedge():
+@app.route("/toggleedge")
+def toggleedge():
 
-    def remove(graph):
-        if graph.has_edge(request.args.get('label1'),request.args.get('label2')):
-            graph.remove_edge(request.args.get('label1'),request.args.get('label2'))
+    edge = [int(n) for n in request.args.get('label').split('_')]
 
-    updateSessionGraph(remove)
+    def toggle(graph):
+        if graph.has_edge(edge[0],edge[1]):
+            graph.remove_edge(edge[0],edge[1])
+        else:
+            graph.add_edge(edge[0],edge[1])
+
+    updateSessionGraph(toggle)
 
     return graphInterfaceView()
 

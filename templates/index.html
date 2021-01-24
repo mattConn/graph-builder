@@ -25,13 +25,6 @@
             <button type="submit" id="submit">Add Edge</button>
         </form>
         </br>
-        <!-- remove edge -->
-        <form action="removeedge" method="GET">
-            <input type="text" id="node_label1" name="label1">
-            <input type="text" id="node_label2" name="label2">
-            <button type="submit" id="submit">Remove Edge</button>
-        </form>
-        </br>
         <!-- add node -->
         <form action="addnode" method="GET">
             <button type="submit" id="submit">Add Node</button>
@@ -53,7 +46,31 @@
         <form action="clear" method="GET">
             <button type="submit" id="submit">Clear Graph</button>
         </form>
+
         <img src="{{filepath}}">
+
+        <!-- adjaceny matrix interface -->
+        <form action="toggleedge" method="GET">
+            <table>
+                <tr>
+                    <th></th>
+                    {% for i in nodes %}
+                    <th>{{i}}</th>
+                    {%endfor%}
+                </tr>
+
+                {% for i in nodes %}
+                <tr>
+                    <td>{{i}}</td>
+                    {% for j in nodes %}
+                    <td><input type="checkbox" id="edge_{{i}}_{{j}}" name="label" value="{{i}}_{{j}}" onChange="this.form.submit()"/></td>
+                    {%endfor%}
+                </tr>
+                {%endfor%}
+
+            </table>
+        </form>
+
         <div>
             <h2>Adjaceny Matrix Array</h3>
                 <p>{{matrix}}</p>
