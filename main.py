@@ -105,6 +105,14 @@ def complementgraph():
 
     return redirect(url_for('graphInterfaceView'))
 
+# clear edges 
+@app.route("/clearedges")
+def clearedges():
+
+    updateSessionGraph(lambda graph: graph.remove_edges_from(graph.edges()))
+
+    return redirect(url_for('graphInterfaceView'))
+
 # clear graph
 @app.route("/clear")
 def cleargraph():
