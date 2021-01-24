@@ -26,21 +26,21 @@
         </br>
         <!-- remove node -->
         <form id="removenode" action="removenode" method="GET">
-            {% if nodes|length > 0 %}
+            {% if graph.nodes|length > 0 %}
             <select id="label" name="label" form="removenode">
-                {% for i in nodes %}
+                {% for i in graph.nodes %}
                 <option value="{{i}}">{{i}}</option>
                 {%endfor%}
             </select>
             {% endif %}
 
-            <button type="submit" id="submit" {% if nodes|length == 0 %}disabled{% endif %}>Remove Node</button>
+            <button type="submit" id="submit" {% if graph.nodes|length == 0 %}disabled{% endif %}>Remove Node</button>
 
         </form>
         </br>
         <!-- complement graph -->
         <form action="complement" method="GET">
-            <button type="submit" id="submit" {% if nodes|length <= 1 %}disabled{% endif %}>Complement Graph</button>
+            <button type="submit" id="submit" {% if graph.nodes|length <= 1 %}disabled{% endif %}>Complement Graph</button>
         </form>
         </br>
         <!-- clear edges -->
@@ -50,28 +50,28 @@
         </br>
         <!-- clear graph -->
         <form action="clear" method="GET">
-            <button type="submit" id="submit" {% if nodes|length == 0 %}disabled{% endif %}>Clear Graph</button>
+            <button type="submit" id="submit" {% if graph.nodes|length == 0 %}disabled{% endif %}>Clear Graph</button>
         </form>
 
 
         <h2>Toggle Edges</h2>
-        {% if nodes|length <= 1 %}<p>[Need more nodes]</p>{% endif %}
+        {% if graph.nodes|length <= 1 %}<p>[Need more nodes]</p>{% endif %}
         <!-- adjaceny matrix interface -->
 
-        {% if nodes|length > 1 %}
+        {% if graph.nodes|length > 1 %}
         <form action="toggleedge" method="GET" id="adjmat">
             <table>
                 <tr class="col-header">
                     <th></th>
-                    {% for i in nodes %}
+                    {% for i in graph.nodes %}
                     <th>{{i}}</th>
                     {%endfor%}
                 </tr>
 
-                {% for i in nodes %}
+                {% for i in graph.nodes %}
                 <tr>
                     <td class="row">{{i}}</td>
-                    {% for j in nodes %}
+                    {% for j in graph.nodes %}
                     <td
                     {% if i == j %} class="disabled" {% endif %}
                     {% if graph.has_edge(i,j) %} class="active" {% endif %} >

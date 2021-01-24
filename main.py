@@ -46,7 +46,6 @@ def graphInterfaceView():
     return render_template('index.html',
     filepath = filepath % session['filehash'],
     matrix = str(nx.to_numpy_array(graph)).replace('.',',').replace('\n',','),
-    nodes = graph.nodes,
     graph = graph,
     data = json.dumps(nx.node_link_data(graph)) ) 
 
