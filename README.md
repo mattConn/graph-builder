@@ -15,7 +15,3 @@ This is a Flask webapp that interfaces with a NetworkX graph object.
 ## Screenshot
 
 ![screenshot](screenshot.png)
-
-
-## Known Issues
-If the wrong graph image appears, refresh the page. I am trying to prevent this with unique file hashes but this is still not entirely resolved. 
