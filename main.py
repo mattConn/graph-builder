@@ -2,6 +2,8 @@ import json
 import random
 import os
 import networkx as nx
+from io import BytesIO
+import base64
 import matplotlib.pyplot as plt
 from flask import Flask, request, render_template, redirect, url_for, session
 app = Flask(__name__)
@@ -40,11 +42,17 @@ def graphInterfaceView():
 
     nx.draw_networkx(graph,font_color='white', pos=nx.circular_layout(graph))
     plt.savefig(filepath % session['filehash']) # save graph image
+
+    figfile = BytesIO()
+    plt.savefig(figfile, format='png')
+    figfile.seek(0)
+    figdata_png = base64.b64encode(figfile.getvalue()).decode('ascii')
     plt.close()
 
 
     return render_template('index.html',
     filepath = filepath % session['filehash'],
+    image_base64 = figdata_png,
     matrix = str(nx.to_numpy_array(graph)).replace('.',',').replace('\n',','),
     graph = graph,
     data = json.dumps(nx.node_link_data(graph)) ) 
