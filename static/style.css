@@ -46,3 +46,12 @@ table {
 .col-header {
     border-bottom: solid 1px;
 }
+
+.addnode {
+    text-decoration: none;
+    background-color: white;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: 700;
+    color: black;
+}

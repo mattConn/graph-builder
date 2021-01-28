@@ -19,10 +19,6 @@
         <h1>Graph Builder</h1>
         <img src="data:image/png;base64, {{image_base64}}">
 
-        <!-- add node -->
-        <form action="addnode" method="GET">
-            <button type="submit" id="submit">Add Node</button>
-        </form>
         </br>
         <!-- remove node -->
         <form id="removenode" action="removenode" method="GET">
@@ -34,76 +30,77 @@
             </select>
             {% endif %}
 
-            <button type="submit" id="submit" {% if graph.nodes|length == 0 %}disabled{% endif %}>Remove Node</button>
+            <button type="submit" id="submit" {% if graph.nodes|length==0 %}disabled{% endif %}>Remove Node</button>
 
         </form>
         </br>
         <!-- complement graph -->
         <form action="complement" method="GET">
-            <button type="submit" id="submit" {% if graph.nodes|length <= 1 %}disabled{% endif %}>Complement Graph</button>
+            <button type="submit" id="submit" {% if graph.nodes|length <=1 %}disabled{% endif %}>Complement
+                Graph</button>
         </form>
         </br>
         <!-- clear edges -->
         <form action="clearedges" method="GET">
-            <button type="submit" id="submit" {% if graph.edges|length == 0 %}disabled{% endif %}>Clear Edges</button>
+            <button type="submit" id="submit" {% if graph.edges|length==0 %}disabled{% endif %}>Clear Edges</button>
         </form>
         </br>
         <!-- clear graph -->
         <form action="clear" method="GET">
-            <button type="submit" id="submit" {% if graph.nodes|length == 0 %}disabled{% endif %}>Clear Graph</button>
+            <button type="submit" id="submit" {% if graph.nodes|length==0 %}disabled{% endif %}>Clear Graph</button>
         </form>
 
 
         <h2>Toggle Edges</h2>
         {% if graph.nodes|length <= 1 %}<p>[Need more nodes]</p>{% endif %}
-        <!-- adjaceny matrix interface -->
+            <!-- adjaceny matrix interface -->
 
-        {% if graph.nodes|length > 1 %}
-        <form action="toggleedge" method="GET" id="adjmat">
-            <table>
-                <tr class="col-header">
-                    <th></th>
+            {% if graph.nodes|length > 1 %}
+            <form action="toggleedge" method="GET" id="adjmat">
+                <table>
+                    <tr class="col-header">
+                        <th></th>
+                        {% for i in graph.nodes %}
+                        <th>{{i}}</th>
+                        {%endfor%}
+
+                        <th>
+                            <!-- add node -->
+                            <a class="addnode" href="addnode">+</a>
+                        </th>
+                    </tr>
+
                     {% for i in graph.nodes %}
-                    <th>{{i}}</th>
+                    <tr>
+                        <td class="row">{{i}}</td>
+                        {% for j in graph.nodes %}
+                        <td {% if i==j %} class="disabled" {% endif %} {% if graph.has_edge(i,j) %} class="active" {%
+                            endif %}>
+
+                            <button type="submit" form="adjmat" name="label" value="{{i}}_{{j}}" {% if i==j %} disabled
+                                {% endif %}>
+                                {% if graph.has_edge(i,j) %}
+                                1
+                                {% else %}
+                                0
+                                {% endif %}
+                            </button>
+                        </td>
+                        {%endfor%}
+                    </tr>
                     {%endfor%}
-                </tr>
 
-                {% for i in graph.nodes %}
-                <tr>
-                    <td class="row">{{i}}</td>
-                    {% for j in graph.nodes %}
-                    <td
-                    {% if i == j %} class="disabled" {% endif %}
-                    {% if graph.has_edge(i,j) %} class="active" {% endif %} >
-                        
-                        <button type="submit"
-                        form="adjmat"
-                        name="label"
-                        value="{{i}}_{{j}}"
-                        {% if i == j %} disabled {% endif %}
-                         >
-                        {% if graph.has_edge(i,j) %}
-                        1
-                        {% else %}
-                        0
-                        {% endif %}
-                        </button>
-                    </td>
-                    {%endfor%}
-                </tr>
-                {%endfor%}
+                </table>
+            </form>
+            {% endif %}
 
-            </table>
-        </form>
-        {% endif %}
-
-        <div>
-            <h2>Adjaceny Matrix Array</h2>
+            <div>
+                <h2>Adjaceny Matrix Array</h2>
                 <p>{{matrix}}</p>
 
                 <h2>JSON Node Link Data</h2>
-                    <p>{{data}}</p>
-        </div>
+                <p>{{data}}</p>
+            </div>
 
     </body>
 </div>
