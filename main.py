@@ -2,13 +2,13 @@ import json
 import random
 import os
 import networkx as nx
+from io import BytesIO
+import base64
 import matplotlib.pyplot as plt
 from flask import Flask, request, render_template, redirect, url_for, session
 app = Flask(__name__)
 
 app.secret_key = os.urandom(24)
-
-filepath = 'static/img/graph%s.png'
 
 def getSessionGraph():
     return nx.adjacency_graph(session['graph'])
@@ -29,24 +29,24 @@ def before_request():
 
 @app.route("/")
 def graphInterfaceView():
-    # remove old graph image
-    if 'filehash' in session and os.path.isfile(filepath % session['filehash']):
-        os.remove(filepath % session['filehash'])
-
-    # generate new filehash
-    session['filehash'] = random.randint(1000,4000)
 
     graph = getSessionGraph()
 
+    # draw graph
     nx.draw_networkx(graph,font_color='white', pos=nx.circular_layout(graph))
-    plt.savefig(filepath % session['filehash']) # save graph image
+
+    # base64 encode graph image 
+    figfile = BytesIO()
+    plt.savefig(figfile, format='png')
     plt.close()
+
+    figfile.seek(0)
+    figdata_png = base64.b64encode(figfile.getvalue()).decode('ascii')
 
 
     return render_template('index.html',
-    filepath = filepath % session['filehash'],
+    image_base64 = figdata_png,
     matrix = str(nx.to_numpy_array(graph)).replace('.',',').replace('\n',','),
-    nodes = graph.nodes,
     graph = graph,
     data = json.dumps(nx.node_link_data(graph)) ) 
 
