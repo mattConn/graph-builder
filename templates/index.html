@@ -55,25 +55,26 @@
         {% if graph.nodes|length <= 1 %}<p>[Need more nodes]</p>{% endif %}
             <!-- adjaceny matrix interface -->
 
-            {% if graph.nodes|length > 1 %}
             <form action="toggleedge" method="GET" id="adjmat">
                 <table>
                     <tr class="col-header">
-                        <th></th>
-                        {% for i in graph.nodes %}
-                        <th>{{i}}</th>
+                        <th></th> <!-- blank upper corner -->
+                        {% for i in graph.nodes|sort %}
+                        <th>
+                            <a class="node-btn delete-btn" href="removenode?label={{i}}">{{i}}</a>
+                        </th>
                         {%endfor%}
 
                         <th>
                             <!-- add node -->
-                            <a class="addnode" href="addnode">+</a>
+                            <a class="node-btn" href="addnode">+</a>
                         </th>
                     </tr>
 
-                    {% for i in graph.nodes %}
+                    {% for i in graph.nodes|sort %}
                     <tr>
                         <td class="row">{{i}}</td>
-                        {% for j in graph.nodes %}
+                        {% for j in graph.nodes|sort %}
                         <td {% if i==j %} class="disabled" {% endif %} {% if graph.has_edge(i,j) %} class="active" {%
                             endif %}>
 
@@ -92,7 +93,6 @@
 
                 </table>
             </form>
-            {% endif %}
 
             <div>
                 <h2>Adjaceny Matrix Array</h2>
