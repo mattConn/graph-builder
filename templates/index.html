@@ -32,16 +32,13 @@
 
         <br>
         <br>
-
-        {% if graph.nodes|length <= 1 %}<p>[Need more nodes]</p>{% endif %}
-
             <!-- adjaceny matrix interface -->
 
                 <form action="toggleedge" method="GET" id="adjmat">
                     <table>
                         <tr class="col-header">
                             <!-- add node -->
-                            <th><a class="node-btn" href="addnode">+ {% if graph.nodes|length == 0 %}Create Graph{% endif %}</a></th>
+                            <th><a class="node-btn" href="addnode">+{% if graph.nodes|length == 0 %} Create Graph{% endif %}</a></th>
                         {% for i in graph.nodes|sort %}
                         <th>
                             <a class="node-btn delete-btn" href="removenode?label={{i}}">{{i}}</a>
@@ -63,7 +60,8 @@
                             </button>
                         </td>
                         {%endfor%}
-                        <td><a class="node-btn" href="addnode">~</a></td>
+                        <td>{% if graph.nodes|length >= 2 %}<a class="node-btn" href="complementnode?label={{i}}">~</a>{% endif %}</td>
+
                     </tr>
                     {%endfor%}
 

@@ -75,3 +75,7 @@ form {
 button {
     cursor: pointer;
 }
+
+li {
+    margin: 10px auto;
+}
