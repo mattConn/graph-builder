@@ -17,93 +17,79 @@
 
     <body>
         <h1>Graph Builder</h1>
-        <img src="data:image/png;base64, {{image_base64}}">
+        <hr>
 
-        <!-- add node -->
-        <form action="addnode" method="GET">
-            <button type="submit" id="submit">Add Node</button>
-        </form>
-        </br>
-        <!-- remove node -->
-        <form id="removenode" action="removenode" method="GET">
-            {% if graph.nodes|length > 0 %}
-            <select id="label" name="label" form="removenode">
-                {% for i in graph.nodes %}
-                <option value="{{i}}">{{i}}</option>
-                {%endfor%}
-            </select>
-            {% endif %}
+        <button onclick="document.querySelector('#help').classList.toggle('hidden')">Help</button>
+        <ul id="help" class="hidden">
+            <li>+ to add node</li>
+            <li>Click node in table header to remove it</li>
+            <li>Click cell to toggle edge</li>
+            <li>~ to toggle all edges for a node</li>
+            <li>~E to toggle all edges</li>
+            <li>E=0 to remove all edges</li>
+            <li>V=0 to remove all nodes</li>
+        </ul>
 
-            <button type="submit" id="submit" {% if graph.nodes|length == 0 %}disabled{% endif %}>Remove Node</button>
+        <br>
+        <br>
+            <!-- adjaceny matrix interface -->
 
-        </form>
-        </br>
-        <!-- complement graph -->
-        <form action="complement" method="GET">
-            <button type="submit" id="submit" {% if graph.nodes|length <= 1 %}disabled{% endif %}>Complement Graph</button>
-        </form>
-        </br>
-        <!-- clear edges -->
-        <form action="clearedges" method="GET">
-            <button type="submit" id="submit" {% if graph.edges|length == 0 %}disabled{% endif %}>Clear Edges</button>
-        </form>
-        </br>
-        <!-- clear graph -->
-        <form action="clear" method="GET">
-            <button type="submit" id="submit" {% if graph.nodes|length == 0 %}disabled{% endif %}>Clear Graph</button>
-        </form>
+                <form action="toggleedge" method="GET" id="adjmat">
+                    <table>
+                        <tr class="col-header">
+                            <!-- add node -->
+                            <th><a class="node-btn" href="addnode">+{% if graph.nodes|length == 0 %} Create Graph{% endif %}</a></th>
+                        {% for i in graph.nodes|sort %}
+                        <th>
+                            <a class="node-btn delete-btn" href="removenode?label={{i}}">{{i}}</a>
+                        </th>
+                        {%endfor%}
+                        <th></th>
+                    </tr>
 
+                    {% for i in graph.nodes|sort %}
+                    <tr>
+                        <td class="row">{{i}}</td>
+                        {% for j in graph.nodes|sort %}
+                        <td {% if i==j %} class="disabled" {% endif %} {% if graph.has_edge(i,j) %} class="active" {%
+                            endif %}>
 
-        <h2>Toggle Edges</h2>
-        {% if graph.nodes|length <= 1 %}<p>[Need more nodes]</p>{% endif %}
-        <!-- adjaceny matrix interface -->
+                            <button type="submit" form="adjmat" name="label" value="{{i}}_{{j}}" {% if i==j %} disabled
+                                {% endif %}>
+                                {% if graph.has_edge(i,j) %} 1 {% else %} 0 {% endif %}
+                            </button>
+                        </td>
+                        {%endfor%}
+                        <td>{% if graph.nodes|length >= 2 %}<a class="node-btn" href="complementnode?label={{i}}">~</a>{% endif %}</td>
 
-        {% if graph.nodes|length > 1 %}
-        <form action="toggleedge" method="GET" id="adjmat">
-            <table>
-                <tr class="col-header">
-                    <th></th>
-                    {% for i in graph.nodes %}
-                    <th>{{i}}</th>
+                    </tr>
                     {%endfor%}
-                </tr>
 
-                {% for i in graph.nodes %}
-                <tr>
-                    <td class="row">{{i}}</td>
-                    {% for j in graph.nodes %}
-                    <td
-                    {% if i == j %} class="disabled" {% endif %}
-                    {% if graph.has_edge(i,j) %} class="active" {% endif %} >
-                        
-                        <button type="submit"
-                        form="adjmat"
-                        name="label"
-                        value="{{i}}_{{j}}"
-                        {% if i == j %} disabled {% endif %}
-                         >
-                        {% if graph.has_edge(i,j) %}
-                        1
-                        {% else %}
-                        0
-                        {% endif %}
-                        </button>
-                    </td>
-                    {%endfor%}
-                </tr>
-                {%endfor%}
+                </table>
+            </form>
 
-            </table>
-        </form>
-        {% endif %}
+            </br>
+            <!-- complement graph -->
+            <form action="complement" method="GET">
+                <button type="submit" id="submit" {% if graph.nodes|length <=1 %}disabled{% endif %}>~E</button>
+            </form>
+            <!-- clear edges -->
+            <form action="clearedges" method="GET">
+                <button type="submit" id="submit" {% if graph.edges|length==0 %}disabled{% endif %}>E=0</button>
+            </form>
+            <!-- clear graph -->
+            <form action="clear" method="GET">
+                <button type="submit" id="submit" {% if graph.nodes|length==0 %}disabled{% endif %}>V=0</button>
+            </form>
+            <img src="data:image/png;base64, {{image_base64}}">
 
-        <div>
-            <h2>Adjaceny Matrix Array</h2>
+            <div>
+                <h2>Adjaceny Matrix Array</h2>
                 <p>{{matrix}}</p>
 
                 <h2>JSON Node Link Data</h2>
-                    <p>{{data}}</p>
-        </div>
+                <p>{{data}}</p>
+            </div>
 
     </body>
 </div>

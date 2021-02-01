@@ -105,6 +105,23 @@ def complementgraph():
 
     return redirect(url_for('graphInterfaceView'))
 
+# complement edges for single node
+@app.route("/complementnode")
+def complementnode():
+    node = int(request.args.get('label'))
+
+    def complement(graph):
+        if node in graph.nodes:
+            for i in graph.nodes:
+                if i not in graph.neighbors(node):
+                    graph.add_edge(node,i)
+                else:
+                    graph.remove_edge(node,i)
+
+    updateSessionGraph(complement)
+
+    return redirect(url_for('graphInterfaceView'))
+
 # clear edges 
 @app.route("/clearedges")
 def clearedges():
