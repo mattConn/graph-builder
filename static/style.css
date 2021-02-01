@@ -28,16 +28,27 @@ tr:hover {
     background-color: none;
 }
 
+td {
+    padding: 0;
+}
+
+th {
+    padding: 0 5px;
+}
+
 #adjmat td.active {
     background-color:paleturquoise;
 }
 
 img {
-    float: right;
+    width: 100%;
+    max-width: 600px;
+    display: block;
 }
 
 table {
     border-collapse: collapse;
+    font-size: 1.5em;
 }
 .row {
     border-right: solid 1px;
@@ -51,4 +62,16 @@ table {
     text-decoration: none;
     font-weight: 700;
     color: black;
+}
+
+form {
+    display: inline-block;
+}
+
+.hidden {
+    display: none;
+}
+
+button {
+    cursor: pointer;
 }
