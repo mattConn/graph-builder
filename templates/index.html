@@ -33,15 +33,15 @@
         <br>
         <br>
             <!-- adjaceny matrix interface -->
-
-                <form action="toggleedge" method="GET" id="adjmat">
+                <a name="adjmat">
+                <form action="toggleedge#adjmat" method="GET" id="adjmat">
                     <table>
                         <tr class="col-header">
                             <!-- add node -->
-                            <th><a class="node-btn" href="addnode">+{% if graph.nodes|length == 0 %} Create Graph{% endif %}</a></th>
+                            <th><a class="node-btn" href="addnode#adjmat">+{% if graph.nodes|length == 0 %} Create Graph{% endif %}</a></th>
                         {% for i in graph.nodes|sort %}
                         <th>
-                            <a class="node-btn delete-btn" href="removenode?label={{i}}">{{i}}</a>
+                            <a class="node-btn delete-btn" href="removenode?label={{i}}#adjmat">{{i}}</a>
                         </th>
                         {%endfor%}
                         <th></th>
@@ -60,7 +60,7 @@
                             </button>
                         </td>
                         {%endfor%}
-                        <td>{% if graph.nodes|length >= 2 %}<a class="node-btn" href="complementnode?label={{i}}">~</a>{% endif %}</td>
+                        <td>{% if graph.nodes|length >= 2 %}<a class="node-btn" href="complementnode?label={{i}}#adjmat">~</a>{% endif %}</td>
 
                     </tr>
                     {%endfor%}
@@ -70,15 +70,15 @@
 
             </br>
             <!-- complement graph -->
-            <form action="complement" method="GET">
+            <form action="complement#adjmat" method="GET">
                 <button type="submit" id="submit" {% if graph.nodes|length <=1 %}disabled{% endif %}>~E</button>
             </form>
             <!-- clear edges -->
-            <form action="clearedges" method="GET">
+            <form action="clearedges#adjmat" method="GET">
                 <button type="submit" id="submit" {% if graph.edges|length==0 %}disabled{% endif %}>E=0</button>
             </form>
             <!-- clear graph -->
-            <form action="clear" method="GET">
+            <form action="clear#adjmat" method="GET">
                 <button type="submit" id="submit" {% if graph.nodes|length==0 %}disabled{% endif %}>V=0</button>
             </form>
             <img src="data:image/png;base64, {{image_base64}}">
