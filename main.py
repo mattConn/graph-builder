@@ -17,9 +17,9 @@ def getSessionGraph():
 def setSessionGraph(graph):
     session['graph'] = nx.adjacency_data(graph)
 
-def updateSessionGraph(update = lambda _: None):
+def updateSessionGraph(update = lambda _: None, **kw):
     graph = getSessionGraph()
-    update(graph)
+    update(graph,**kw)
     setSessionGraph(graph)
 
 @app.before_request
@@ -62,11 +62,7 @@ def addnode():
 @app.route("/removenode")
 def removenode():
 
-    def remove(graph):
-        if graph.has_node(int(request.args.get('label'))):
-            graph.remove_node(int(request.args.get('label')))
-
-    updateSessionGraph(remove)
+    updateSessionGraph(g.remove, node=int(request.args.get('label')))
 
     return redirect(url_for('graphInterfaceView'))
 
