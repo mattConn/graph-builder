@@ -22,3 +22,7 @@ Run `python main.py`. The adjacency matrix interface is used as follows:
 - E=0 to remove all edges
 - V=0 to remove all nodes
 
+## Testing (Incomplete)
+Run `pytest` to test:
+- node insertion
+- node deletion

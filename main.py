@@ -6,6 +6,7 @@ from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
 from flask import Flask, request, render_template, redirect, url_for, session
+import graph as g
 app = Flask(__name__)
 
 app.secret_key = os.urandom(24)
@@ -16,9 +17,9 @@ def getSessionGraph():
 def setSessionGraph(graph):
     session['graph'] = nx.adjacency_data(graph)
 
-def updateSessionGraph(update = lambda _: None):
+def updateSessionGraph(update = lambda _: None, **kw):
     graph = getSessionGraph()
-    update(graph)
+    update(graph,**kw)
     setSessionGraph(graph)
 
 @app.before_request
@@ -53,24 +54,15 @@ def graphInterfaceView():
 # add and remove node
 @app.route("/addnode")
 def addnode():
-    def add(graph):
-        for i in range(len(graph.nodes)+1):
-            if i not in graph.nodes:
-                graph.add_node(i)
-                break
 
-    updateSessionGraph(add)
+    updateSessionGraph(g.add)
 
     return redirect(url_for('graphInterfaceView'))
 
 @app.route("/removenode")
 def removenode():
 
-    def remove(graph):
-        if graph.has_node(int(request.args.get('label'))):
-            graph.remove_node(int(request.args.get('label')))
-
-    updateSessionGraph(remove)
+    updateSessionGraph(g.remove, node=int(request.args.get('label')))
 
     return redirect(url_for('graphInterfaceView'))
 
