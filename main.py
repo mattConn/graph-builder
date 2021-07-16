@@ -6,6 +6,7 @@ from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
 from flask import Flask, request, render_template, redirect, url_for, session
+import graph as g
 app = Flask(__name__)
 
 app.secret_key = os.urandom(24)
@@ -53,13 +54,8 @@ def graphInterfaceView():
 # add and remove node
 @app.route("/addnode")
 def addnode():
-    def add(graph):
-        for i in range(len(graph.nodes)+1):
-            if i not in graph.nodes:
-                graph.add_node(i)
-                break
 
-    updateSessionGraph(add)
+    updateSessionGraph(g.add)
 
     return redirect(url_for('graphInterfaceView'))
 
