@@ -1,3 +1,4 @@
 static/img/*.png
 __pycache__
 .cache
+*.pyc

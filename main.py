@@ -75,16 +75,7 @@ def addedge():
 
 @app.route("/toggleedge")
 def toggleedge():
-
-    edge = [int(n) for n in request.args.get('label').split('_')]
-
-    def toggle(graph):
-        if graph.has_edge(edge[0],edge[1]):
-            graph.remove_edge(edge[0],edge[1])
-        else:
-            graph.add_edge(edge[0],edge[1])
-
-    updateSessionGraph(toggle)
+    updateSessionGraph(g.toggle,edge=[int(n) for n in request.args.get('label').split('_')])
 
     return redirect(url_for('graphInterfaceView'))
 

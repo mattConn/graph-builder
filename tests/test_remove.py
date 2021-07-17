@@ -26,7 +26,7 @@ def test_empty():
 	g = makeGraph(None)
 	want = []
 
-	# effectivley a no-op
+	# effectiveley a no-op
 	graph.remove(g,3)
 
 	assert list(g.nodes) == want, name
