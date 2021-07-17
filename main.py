@@ -91,17 +91,7 @@ def complementgraph():
 # complement edges for single node
 @app.route("/complementnode")
 def complementnode():
-    node = int(request.args.get('label'))
-
-    def complement(graph):
-        if node in graph.nodes:
-            for i in graph.nodes:
-                if i not in graph.neighbors(node):
-                    graph.add_edge(node,i)
-                else:
-                    graph.remove_edge(node,i)
-
-    updateSessionGraph(complement)
+    updateSessionGraph(g.complement,node=int(request.args.get('label')))
 
     return redirect(url_for('graphInterfaceView'))
 
