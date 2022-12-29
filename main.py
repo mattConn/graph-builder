@@ -4,6 +4,8 @@ import os
 import networkx as nx
 from io import BytesIO
 import base64
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from flask import Flask, request, render_template, redirect, url_for, session
 import graph as g
